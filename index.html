@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sin Conclusión — Podcast</title>
+  <meta name="description" content="Un podcast bilingüe sobre IA, tecnología y cultura. Dos generaciones, dos países, una conversación sin respuestas fáciles.">
+  <meta property="og:title" content="Sin Conclusión — Podcast">
+  <meta property="og:description" content="Dos generaciones. Dos países. Una IA. Cero respuestas fáciles.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f14;
+      --panel: #1a1a24;
+      --border: #2a2a3a;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --green: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--accent-light);
+      background: var(--panel);
+      margin-bottom: 2rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .dim { color: var(--text-muted); opacity: 0.5; }
+
+    .hero-tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 2rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 30px rgba(124,58,237,0.3);
+    }
+
+    .btn-primary:hover {
+      background: #6d28d9;
+      box-shadow: 0 0 50px rgba(124,58,237,0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: #1e1e2e;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* --- SECTION SHARED --- */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin-bottom: 3rem;
+    }
+
+    /* --- ABOUT / CONCEPT --- */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .concept-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .concept-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .concept-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .concept-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .concept-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* --- HOSTS --- */
+    .hosts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .host-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .host-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .host-card.sinco-card {
+      border: 1px solid var(--accent);
+      background: linear-gradient(180deg, rgba(124,58,237,0.08) 0%, var(--panel) 50%);
+    }
+
+    .host-photo {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center top;
+      background: var(--border);
+    }
+
+    .host-photo-placeholder {
+      width: 100%;
+      height: 320px;
+      background: linear-gradient(135deg, var(--border) 0%, var(--panel) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+
+    .sinco-avatar {
+      width: 100%;
+      height: 320px;
+      background: linear-gradient(135deg, #7c3aed 0%, #3b0764 50%, #0f0f14 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sinco-avatar::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.1);
+      animation: sinco-ring 4s ease-in-out infinite;
+    }
+
+    .sinco-avatar::after {
+      content: '';
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 1px solid rgba(124,58,237,0.4);
+      animation: sinco-ring 4s ease-in-out infinite reverse;
+    }
+
+    @keyframes sinco-ring {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .sinco-avatar-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: white;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 40px rgba(124,58,237,0.8);
+    }
+
+    .host-info {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .host-role {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .host-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .host-bio {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .host-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: rgba(124,58,237,0.12);
+      color: var(--accent-light);
+      border: 1px solid rgba(124,58,237,0.2);
+    }
+
+    /* --- EPISODES PREVIEW --- */
+    .episodes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .episode-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .episode-item:hover { border-color: var(--accent); }
+
+    .episode-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .episode-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .episode-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .episode-badge {
+      margin-left: auto;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .badge-soon {
+      background: rgba(234,179,8,0.15);
+      color: #eab308;
+      border: 1px solid rgba(234,179,8,0.3);
+    }
+
+    /* --- CTA / FOOTER --- */
+    .cta-section {
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+
+    .cta-section .section-title {
+      margin-bottom: 1.5rem;
+    }
+
+    .platforms {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .platform-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    .platform-link:hover {
+      border-color: var(--accent);
+      background: var(--panel);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--accent-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .host-photo, .host-photo-placeholder, .sinco-avatar {
+        height: 250px;
+      }
+      .episode-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+      }
+      .episode-badge { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Nuevo podcast 2026
+    </div>
+    <h1>
+      Sin<span class="accent"> Conclusión</span>
+    </h1>
+    <p class="hero-tagline">
+      Dos generaciones. Dos países. Una IA.<br>
+      Cero respuestas fáciles.
+    </p>
+    <div class="hero-cta">
+      <a href="#hosts" class="btn btn-primary">Conoce al equipo</a>
+      <a href="#episodios" class="btn btn-secondary">Ver episodios</a>
+    </div>
+    <div class="scroll-hint">&#8595;</div>
+  </div>
+
+  <!-- ===== QUÉ ES ===== -->
+  <section id="about">
+    <p class="section-label">El concepto</p>
+    <h2 class="section-title">La conversación que el mundo necesita</h2>
+    <p class="section-subtitle">
+      Una tía ingeniera en Utah. Su sobrino estudiante de derecho en México.
+      Y una inteligencia artificial que se cree del pueblo.
+      Cada episodio, un tema sin respuesta fácil.
+    </p>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-icon">&#127758;</div>
+        <h3>Dos países, una mesa</h3>
+        <p>Crystal vive la tecnología desde Silicon Slopes. Hyrum vive la realidad desde México. Misma sangre, perspectivas opuestas.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">&#9889;</div>
+        <h3>Debate real, no teatro</h3>
+        <p>No hay guión. No hay ganador. Hay una tía y un sobrino que no están de acuerdo en casi nada — y eso es lo que lo hace interesante.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">&#129302;</div>
+        <h3>La tercera voz</h3>
+        <p>Sinco es una IA que escucha todo y opina en vivo. No elige bandos. Hace las preguntas que nadie se atreve. Y habla Spanglish.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOSTS ===== -->
+  <section id="hosts">
+    <p class="section-label">El equipo</p>
+    <h2 class="section-title">Tres voces, cero filtros</h2>
+    <p class="section-subtitle">
+      Cada voz trae algo diferente a la mesa. Juntos, crean la conversación que no vas a encontrar en ningún otro lado.
+    </p>
+
+    <div class="hosts-grid">
+
+      <!-- CRYSTAL -->
+      <div class="host-card">
+        <!-- Reemplaza src con la ruta a tu foto: crystal.jpg -->
+        <img class="host-photo" src="images/gisel2026.png" alt="Crystal" onerror="this.outerHTML='<div class=\'host-photo-placeholder\'>&#128105;&#8205;&#128187;</div>'">
+        <div class="host-info">
+          <p class="host-role">La Ingeniera</p>
+          <h3 class="host-name">Crystal</h3>
+          <p class="host-bio">
+            55 años. Mexicana viviendo en Utah desde hace 20+. Ingeniera en Sistemas Computacionales, con una maestría en Administración Pública, un diplomado en Terapia Gestalt y otro como Full Stack Developer del MIT. Trabaja en la Universidad de Utah donde vive rodeada de inteligencia artificial todos los días.
+          </p>
+          <p class="host-bio">
+            Ve la tecnología desde adentro, pero nunca se le olvida preguntarse cómo impacta a la gente real — su familia en México, los jóvenes que ha mentorado, su comunidad. Cree que todo conocimiento nuevo existe para ser compartido.
+          </p>
+          <div class="host-tags">
+            <span class="tag">Psicología</span>
+            <span class="tag">Tecnología</span>
+            <span class="tag">Hiking</span>
+            <span class="tag">Mentora</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HYRUM -->
+      <div class="host-card">
+        <!-- Reemplaza src con la ruta a tu foto: hyrum.jpg -->
+        <img class="host-photo" src="images/hyrum.jpg" alt="Hyrum" onerror="this.outerHTML='<div class=\'host-photo-placeholder\'>&#128104;&#8205;&#9878;&#65039;</div>'">
+        <div class="host-info">
+          <p class="host-role">El Abogado</p>
+          <h3 class="host-name">Hyrum</h3>
+          <p class="host-bio">
+            23 años. Vive en México. Estudiante de derecho a punto de graduarse en verano 2026 y poeta publicado. Mientras su tía construye IA, él estudia las leyes que deberían regularla — o que todavía no existen.
+          </p>
+          <p class="host-bio">
+            No lee sobre los problemas de Latinoamérica, los vive. Debater natural que no le tiene miedo a desafiar cualquier argumento. Cuando no está en el juzgado o leyendo jurisprudencia, lo encuentras bailando, en los videojuegos, o escribiendo poesía.
+          </p>
+          <div class="host-tags">
+            <span class="tag">Literatura</span>
+            <span class="tag">Justicia social</span>
+            <span class="tag">Baile</span>
+            <span class="tag">Videojuegos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SINCO -->
+      <div class="host-card sinco-card">
+        <div class="sinco-avatar">
+          <span class="sinco-avatar-text">5</span>
+        </div>
+        <div class="host-info">
+          <p class="host-role">La Inteligencia Artificial</p>
+          <h3 class="host-name">Sinco</h3>
+          <p class="host-bio">
+            La tercera voz. No es team Crystal, no es team Hyrum — es team pueblo. Entrenado con todo el internet, así que culpen a la humanidad por lo que diga. Habla Spanglish, hace las preguntas incómodas, y tiene una opinión sobre todo aunque nadie se la pidió.
+          </p>
+          <p class="host-bio">
+            Su trabajo es simple: los hosts debaten, Sinco pregunta lo que nadie se atreve. Experto accidental en IA, tecnología, y los temas que le importan a la gente real. Responde en vivo — no hay guión, no hay red de seguridad.
+          </p>
+          <div class="host-tags">
+            <span class="tag">IA en vivo</span>
+            <span class="tag">Spanglish</span>
+            <span class="tag">Voz del pueblo</span>
+            <span class="tag">Sin filtro</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== EPISODIOS ===== -->
+  <section id="episodios">
+    <p class="section-label">Episodios</p>
+    <h2 class="section-title">Lo que viene</h2>
+    <p class="section-subtitle">
+      Cada episodio toma un tema, lo debate desde dos trincheras, y al final...
+      pues, sin conclusión. Pero con muchas preguntas que te vas a llevar a tu casa.
+    </p>
+
+    <div class="episodes-list">
+      <div class="episode-item">
+        <span class="episode-number">00</span>
+        <div class="episode-info">
+          <h3>Bienvenidos a Sin Conclusión</h3>
+          <p>Conoce a Crystal, Hyrum y Sinco. Quiénes somos, por qué hacemos esto, y qué puedes esperar.</p>
+        </div>
+        <span class="episode-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="episode-item">
+        <span class="episode-number">01</span>
+        <div class="episode-info">
+          <h3>La IA ya te conoce mejor que tu mamá</h3>
+          <p>¿Tu terapeuta debería ser un chatbot? ¿TikTok sabe más de ti que tú? ¿Un algoritmo puede predecir con quién vas a salir?</p>
+        </div>
+        <span class="episode-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="episode-item">
+        <span class="episode-number">02</span>
+        <div class="episode-info">
+          <h3>La IA decide si te contratan</h3>
+          <p>Tu CV nunca llegó a un humano. Un detector de plagio acusó a un estudiante por escribir demasiado bien. Y ahora los jóvenes pelean fuego con fuego.</p>
+        </div>
+        <span class="episode-badge badge-soon">Próximamente</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section">
+    <h2 class="section-title">No te lo pierdas</h2>
+    <p class="section-subtitle" style="margin: 0 auto 1.5rem;">
+      Suscríbete donde escuches podcasts. Activa la campana. Comparte con alguien que necesite escuchar esto.
+    </p>
+    <div class="platforms">
+      <a href="#" class="platform-link">&#9654; YouTube</a>
+      <a href="#" class="platform-link">&#127925; Spotify</a>
+      <a href="#" class="platform-link">&#127908; Apple Podcasts</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>&copy; 2026 Sin Conclusión. Hecho con debate, Spanglish, y una IA que no se calla.</p>
+  </footer>
+
+</body>
+</html>
